@@ -1,0 +1,32 @@
+{
+  "name": "github-jobs-app",
+  "version": "0.0.1",
+  "description": "An application to search jobs using github jobs",
+  "main": "index.android.js",
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-native": "^0.31.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shoumma/GitHub-Jobs-App.git"
+  },
+  "keywords": [
+    "jobs",
+    "github",
+    "react",
+    "react",
+    "native"
+  ],
+  "author": "Provash Shoumma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shoumma/GitHub-Jobs-App/issues"
+  },
+  "homepage": "https://github.com/shoumma/GitHub-Jobs-App#readme"
+}
