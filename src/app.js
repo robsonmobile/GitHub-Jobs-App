@@ -11,6 +11,16 @@ import {
   BackAndroid
 } from 'react-native'
 import { connect } from 'react-redux'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+
+// import tab scenes
+import JobFeed from './scenes/job_feed'
+import SavedJobs from './scenes/saved_jobs'
+import Notifications from './scenes/notifications'
+
+// import the tabbar to use as custom tab bar
+import TabBar from './components/tab_bar'
+
 
 class App extends Component {
   constructor(props) {
@@ -29,7 +39,12 @@ class App extends Component {
 
   render() {
     return (
-      <Text>Hello World</Text>
+      <ScrollableTabView
+      renderTabBar={() => <TabBar />}>
+        <JobFeed tabLabel="Job Feed" />
+        <SavedJobs tabLabel="Saved Jobs" />
+        <Notifications tabLabel="Notifications" />
+      </ScrollableTabView>
     )
   }
 
