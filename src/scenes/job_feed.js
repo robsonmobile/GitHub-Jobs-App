@@ -8,6 +8,8 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
+import { styles } from './job_feed_styles'
+import JobPost from '../components/job_post'
 
 class JobFeed extends Component {
   constructor(props) {
@@ -16,8 +18,33 @@ class JobFeed extends Component {
 
   render() {
     return (
-      <Text>Job Feed Area</Text>
+      <View style={styles.container}>
+        {/* <Text style={styles.waitMsg}>
+          Please wait... Fetching the job feed.
+        </Text> */}
+
+        <View style={{flex: 1}}>
+          <JobPost
+          jobTitle="FizzBuzz Computer Analyst"
+          companyName="SomeCompany Inc."
+          location="Earth"
+          id="someId"
+          onPressJobPost={this._handleJobPress.bind(this)}
+          />
+          <JobPost
+          jobTitle="FizzBuzz Computer Analyst"
+          companyName="SomeCompany Inc."
+          location="Earth"
+          id="awesomeJob"
+          onPressJobPost={this._handleJobPress.bind(this)}
+          />
+        </View>
+      </View>
     )
+  }
+
+  _handleJobPress(id) {
+    console.log(id)
   }
 }
 
