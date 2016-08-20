@@ -1,15 +1,32 @@
 /**
  * this is the main application component
+ * this renders the swipe tab
+ * also handle back button for Android
  */
 
 import React, { Component } from 'react'
 import {
   Text,
-  View
+  View,
+  BackAndroid
 } from 'react-native'
 import { connect } from 'react-redux'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this._handleHardwareBackButton = this._handleHardwareBackButton.bind(this)
+  }
+
+  componentWillMount() {
+    BackAndroid.addEventListener('hardwareBackPress', this._handleHardwareBackButton)
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress', this._handleHardwareBackButton)
+  }
+
   render() {
     return (
       <Text>Hello World</Text>
@@ -22,6 +39,14 @@ class App extends Component {
   //   .then((responseJson) => { console.log('helloo'); this.props.getJob(responseJson) })
   //   .catch((error) => {console.log(error)})
   // }
+
+  _handleHardwareBackButton() {
+    const { navigator } = this.props
+    if (navigator && navigator.getCurrentRoutes().length > 1) {
+        navigator.pop()
+        return true
+    }
+  }
 }
 
 function mapStateToProps(state) {
@@ -31,4 +56,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getJob })(App)
+export default connect(mapStateToProps)(App)
