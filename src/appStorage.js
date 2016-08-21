@@ -30,7 +30,7 @@
 
  // create loader to load app storage from device
  const load = storage.createLoader(engine)
- load(store)
+ // load(store)
 
  export default class AppStorage extends Component {
    render() {

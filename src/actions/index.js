@@ -1,9 +1,16 @@
-export const GET_JOBS = 'GET_JOBS'
+export const SET_JOBS = 'SET_JOBS'
+export const SET_MORE_JOBS = 'SET_MORE_JOBS'
 
-export function getJob(payload) {
-  console.log('function called!!!')
+export function setJobFeed(payload) {
   return {
-    type: GET_JOBS,
+    type: SET_JOBS,
+    payload: payload
+  }
+}
+
+export function setMoreJobFeed(payload) {
+  return {
+    type: SET_MORE_JOBS,
     payload: payload
   }
 }

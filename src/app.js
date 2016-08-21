@@ -48,13 +48,6 @@ class App extends Component {
     )
   }
 
-  // _getJobs() {
-  //   fetch('https://jobs.github.com/positions.json')
-  //   .then((response) => response.json())
-  //   .then((responseJson) => { console.log('helloo'); this.props.getJob(responseJson) })
-  //   .catch((error) => {console.log(error)})
-  // }
-
   _handleHardwareBackButton() {
     const { navigator } = this.props
     if (navigator && navigator.getCurrentRoutes().length > 1) {

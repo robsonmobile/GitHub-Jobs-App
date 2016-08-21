@@ -1,12 +1,17 @@
 /**
  * reducer to get the latest job posts
  */
-import {GET_JOBS} from '../actions'
+import {SET_JOBS} from '../actions'
+import {SET_MORE_JOBS} from '../actions'
 
-export default (state = {}, action) => {
+export default (state = [], action) => {
   switch(action.type) {
-    case GET_JOBS:
+    case SET_JOBS:
       return action.payload
+
+    case SET_MORE_JOBS:
+      const newFeed = state.concat(action.payload)
+      return newFeed
 
     default:
       return state
