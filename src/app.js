@@ -8,7 +8,8 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  BackAndroid
+  BackAndroid,
+  Platform
 } from 'react-native'
 import { connect } from 'react-redux'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
@@ -30,17 +31,23 @@ class App extends Component {
   }
 
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this._handleHardwareBackButton)
+    if(Platform.OS !== 'ios') {
+      BackAndroid.addEventListener('hardwareBackPress', this._handleHardwareBackButton)
+    }
   }
 
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this._handleHardwareBackButton)
+    if(Platform.OS !== 'ios') {
+      BackAndroid.removeEventListener('hardwareBackPress', this._handleHardwareBackButton)
+    }
   }
 
   render() {
+    platformSpecificStyle = (Platform.OS === 'ios') ? { paddingTop: 15 } : { paddingTop: 0 }
     return (
       <ScrollableTabView
-      renderTabBar={() => <TabBar />}>
+      renderTabBar={() => <TabBar />}
+      style={platformSpecificStyle}>
         <JobFeed tabLabel="Job Feed" />
         <SavedJobs tabLabel="Saved Jobs" />
         <Notifications tabLabel="Notifications" />
