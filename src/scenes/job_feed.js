@@ -21,8 +21,7 @@ class JobFeed extends Component {
 
     this.state = {
       feedPage: 1,
-      loadMoreJobAvailable: false,
-      loadMoreJobMessage: 'Load more jobs'
+      loadMoreJobMessage: 'Please wait. Loading more jobs...'
     }
   }
 
@@ -41,6 +40,7 @@ class JobFeed extends Component {
             dataSource={dataSource}
             enableEmptySections={true}
             renderFooter={this._listFooter.bind(this)}
+            onEndReached={_.debounce(this._getMoreJobs.bind(this), 3000)}
             renderRow={(data) =>
               <JobPost
               jobTitle={data.title}
@@ -63,11 +63,9 @@ class JobFeed extends Component {
 
   _listFooter() {
     return (
-      <TouchableWithoutFeedback disabled={this.state.loadMoreJobAvailable} onPress={this._getMoreJobs.bind(this)}>
-        <View style={styles.endOfTheList}>
-          <Text style={styles.endOfTheListText}>{this.state.loadMoreJobMessage}</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={styles.endOfTheList}>
+        <Text style={styles.endOfTheListText}>{this.state.loadMoreJobMessage}</Text>
+      </View>
     )
   }
 
@@ -75,27 +73,35 @@ class JobFeed extends Component {
     console.log(id)
   }
 
+  // initially fetch the job posts
   _getJobs() {
-    console.log('im called')
     fetch('https://jobs.github.com/positions.json')
     .then((response) => response.json())
     .then((responseJson) => { this.props.setJobFeed(responseJson) })
     .catch((error) => {console.log(error)})
   }
 
+  // fetch next job posts if reached the end
   _getMoreJobs() {
-    this.setState({ loadMoreJobMessage: 'Please wait. Loading more jobs...', loadMoreJobAvailable: true })
+    this.setState({ loadMoreJobMessage: 'Please wait. Loading more jobs...' })
+    console.log('getMoreJobsCalled!')
 
     fetch(`https://jobs.github.com/positions.json?page=${this.state.feedPage}`)
     .then((response) => response.json())
     .then((responseJson) => {
-      const nextPage = this.state.feedPage + 1
-      this.setState({
-        feedPage: nextPage,
-        loadMoreJobMessage: 'Load more jobs',
-        loadMoreJobAvailable: false
-      })
-      this.props.setMoreJobFeed(responseJson) })
+      console.log(responseJson)
+      if (responseJson.length != 0) {
+        const nextPage = this.state.feedPage + 1
+        this.setState({
+          feedPage: nextPage
+        })
+        this.props.setMoreJobFeed(responseJson)
+      } else {
+        this.setState({
+          loadMoreJobMessage: 'You have reached at the end of the list.'
+        })
+      }
+    })
     .catch((error) => {console.log(error)})
   }
 }
