@@ -18,7 +18,7 @@ export default class JobPost extends Component {
     } = this.props
 
     return (
-      <TouchableWithoutFeedback onPress={this._handlePress.bind(this, id)}>
+      <TouchableWithoutFeedback onPress={this._handlePress.bind(this)}>
         <View style={styles.container}>
           <View style={styles.titlesContainer}>
             <Text style={styles.title}>{jobTitle}</Text>
@@ -32,7 +32,7 @@ export default class JobPost extends Component {
     )
   }
 
-  _handlePress(id) {
-    this.props.onPressJobPost(id)
+  _handlePress() {
+    this.props.onPressJobPost(this.props.detail)
   }
 }

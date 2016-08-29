@@ -43,14 +43,14 @@ class App extends Component {
   }
 
   render() {
-    platformSpecificStyle = (Platform.OS === 'ios') ? { paddingTop: 15 } : { paddingTop: 0 }
+    const platformSpecificStyle = (Platform.OS === 'ios') ? { paddingTop: 15 } : { paddingTop: 0 }
     return (
       <ScrollableTabView
       renderTabBar={() => <TabBar />}
       style={platformSpecificStyle}>
-        <JobFeed tabLabel="Job Feed" />
-        <SavedJobs tabLabel="Saved Jobs" />
-        <Notifications tabLabel="Notifications" />
+        <JobFeed tabLabel="Job Feed" navigator={this.props.navigator} />
+        <SavedJobs tabLabel="Saved Jobs" navigator={this.props.navigator} />
+        <Notifications tabLabel="Notifications" navigator={this.props.navigator} />
       </ScrollableTabView>
     )
   }

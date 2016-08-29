@@ -6,14 +6,14 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  ListView,
-  TouchableWithoutFeedback
+  ListView
 } from 'react-native'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { styles } from './job_feed_styles'
 import JobPost from '../components/job_post'
 import { setJobFeed, setMoreJobFeed } from '../actions'
+import SingleJob from './single_job'
 
 class JobFeed extends Component {
   constructor(props) {
@@ -40,13 +40,14 @@ class JobFeed extends Component {
             dataSource={dataSource}
             enableEmptySections={true}
             renderFooter={this._listFooter.bind(this)}
-            onEndReached={_.debounce(this._getMoreJobs.bind(this), 3000)}
+            onEndReached={_.debounce(this._getMoreJobs.bind(this), 2000)}
             renderRow={(data) =>
               <JobPost
               jobTitle={data.title}
               companyName={data.company}
               location={data.location}
               id={data.id}
+              detail={data}
               onPressJobPost={this._handleJobPress.bind(this)}
               />
             }
@@ -69,8 +70,8 @@ class JobFeed extends Component {
     )
   }
 
-  _handleJobPress(id) {
-    console.log(id)
+  _handleJobPress(detail) {
+    this.props.navigator.push({view: SingleJob, data: detail})
   }
 
   // initially fetch the job posts
