@@ -44,7 +44,7 @@ class SingleJob extends Component {
     descriptionModified = descriptionModified.replace(/ul\>\<strong/g, 'ul>\n<strong')
     descriptionModified = descriptionModified.replace(/ul\>\<b/g, 'ul>\n<b')
 
-    let time = moment(created_at).fromNow(true)
+    let time = moment(created_at).fromNow()
 
     return (
       <View style={[styles.singleJobContainer, platformSpecificStyle]}>
