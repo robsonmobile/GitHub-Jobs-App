@@ -71,7 +71,7 @@ class JobFeed extends Component {
   }
 
   _handleJobPress(detail) {
-    this.props.navigator.push({view: SingleJob, data: detail})
+    this.props.navigator.push({view: SingleJob, data: detail, savedJob: true})
   }
 
   // initially fetch the job posts

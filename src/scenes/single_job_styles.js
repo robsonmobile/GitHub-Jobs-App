@@ -91,6 +91,19 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     paddingBottom: 10,
     color: '#222222'
+  },
+  saveJob: {
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3498db',
+    flexDirection: 'row'
+  },
+  saveJobTxt: {
+    fontFamily: 'FiraSans-Regular',
+    fontSize: 14,
+    color: '#ffffff',
+    paddingLeft: 10
   }
 })
 

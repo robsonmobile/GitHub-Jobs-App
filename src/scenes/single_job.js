@@ -6,7 +6,8 @@ import {
   Platform,
   Image,
   ScrollView,
-  Linking
+  Linking,
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import { styles, htmlStyles } from './single_job_styles'
@@ -14,7 +15,14 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/Entypo'
 import HTMLView from 'react-native-htmlview'
 
+// import actions
+import { saveJob, deleteJob } from '../actions'
+
 class SingleJob extends Component {
+  static defaultProps = {
+    savedJob: false
+  }
+
   render() {
     const {
       company,
@@ -29,9 +37,11 @@ class SingleJob extends Component {
       type,
       url
     } = this.props.data
+    const { savedJob } = this.props
 
     const platformSpecificStyle = (Platform.OS === 'ios') ? { paddingTop: 15 } : { paddingTop: 0 }
 
+    // removing any whitespaces between tags for better representation
     let descriptionModified = description.replace(/\>\s+\</g, '><')
     descriptionModified = descriptionModified.replace(/ul\>\<p/g, 'ul>\n<p')
     descriptionModified = descriptionModified.replace(/ul\>\<h1/g, 'ul>\n<h1')
@@ -44,6 +54,7 @@ class SingleJob extends Component {
     descriptionModified = descriptionModified.replace(/ul\>\<strong/g, 'ul>\n<strong')
     descriptionModified = descriptionModified.replace(/ul\>\<b/g, 'ul>\n<b')
 
+    // display time in friendly fashion
     let time = moment(created_at).fromNow()
 
     return (
@@ -98,10 +109,20 @@ class SingleJob extends Component {
             onLinkPress={(url) => Linking.openURL(url).catch(err => console.error('An error occurred', err))}
             />
           </View>
+          <TouchableOpacity onPress={ savedJob ? null : _saveJob.bind(this).this.props.data }>
+            <View style={[styles.saveJob, savedJob && {backgroundColor: '#e74c3c'}]}>
+              <Icon name="save" size={24} color="#ffffff"/>
+              <Text style={styles.saveJobTxt}>{savedJob ? 'DELETE JOB' : 'SAVE JOB'}</Text>
+            </View>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     )
   }
+
+  _saveJob(job) {
+    this.props.saveJob(job)
+  }
 }
 
-export default SingleJob
+export default connect(null, {saveJob, deleteJob})(SingleJob)
